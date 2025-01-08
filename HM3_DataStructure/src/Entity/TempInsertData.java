@@ -32,7 +32,7 @@ public class TempInsertData {
             Statement statement = connection.createStatement();
             // Delete all content from each table
             String[] deleteStatements = {
-                "DELETE FROM OrderProducts",
+                "DELETE FROM ProductsInOrder",
                 "DELETE FROM Orders",
                 "DELETE FROM Products"
             };
@@ -45,16 +45,16 @@ public class TempInsertData {
 
             // Insert into Products
             String[] productStatements = {
-                "INSERT INTO Products (product_id, product_name, quan) VALUES (1, 'Table', 2)",
-                "INSERT INTO Products (product_id, product_name, quan) VALUES (2, 'Chair', 8)",
-                "INSERT INTO Products (product_id, product_name, quan) VALUES (3, 'Picture', 2)",
-                "INSERT INTO Products (product_id, product_name, quan) VALUES (4, 'Lamp', 5)",
-                "INSERT INTO Products (product_id, product_name, quan) VALUES (5, 'Sofa', 3)",
-                "INSERT INTO Products (product_id, product_name, quan) VALUES (6, 'Desk', 4)",
-                "INSERT INTO Products (product_id, product_name, quan) VALUES (7, 'Bookshelf', 6)",
-                "INSERT INTO Products (product_id, product_name, quan) VALUES (8, 'Bed', 1)",
-                "INSERT INTO Products (product_id, product_name, quan) VALUES (9, 'Dresser', 2)",
-                "INSERT INTO Products (product_id, product_name, quan) VALUES (10, 'Nightstand', 7)"
+                "INSERT INTO Products (product_id, product_name, quantity) VALUES (1, 'Table', 2)",
+                "INSERT INTO Products (product_id, product_name, quantity) VALUES (2, 'Chair', 8)",
+                "INSERT INTO Products (product_id, product_name, quantity) VALUES (3, 'Picture', 2)",
+                "INSERT INTO Products (product_id, product_name, quantity) VALUES (4, 'Lamp', 5)",
+                "INSERT INTO Products (product_id, product_name, quantity) VALUES (5, 'Sofa', 3)",
+                "INSERT INTO Products (product_id, product_name, quantity) VALUES (6, 'Desk', 4)",
+                "INSERT INTO Products (product_id, product_name, quantity) VALUES (7, 'Bookshelf', 6)",
+                "INSERT INTO Products (product_id, product_name, quantity) VALUES (8, 'Bed', 1)",
+                "INSERT INTO Products (product_id, product_name, quantity) VALUES (9, 'Dresser', 2)",
+                "INSERT INTO Products (product_id, product_name, quantity) VALUES (10, 'Nightstand', 7)"
             };
 
             for (String sql : productStatements) {
@@ -68,11 +68,11 @@ public class TempInsertData {
                 "INSERT INTO Orders (destination, priority, totalItems, allProdAvail, delivered) VALUES ('Israel, Haifa, Herzl St 5', 3, 2, False, False)",
                 "INSERT INTO Orders (destination, priority, totalItems, allProdAvail, delivered) VALUES ('Israel, Beersheba, Ben Gurion Blvd 20', 4, 4, True, True)",
                 "INSERT INTO Orders (destination, priority, totalItems, allProdAvail, delivered) VALUES ('Israel, Eilat, Derech Yotam 15', 5, 6, False, False)",
-                "INSERT INTO Orders (destination, priority, totalItems, allProdAvail, delivered) VALUES ('Israel, Netanya, Herzl St 30', 6, 1, True, True)",
-                "INSERT INTO Orders (destination, priority, totalItems, allProdAvail, delivered) VALUES ('Israel, Ashdod, HaNassi Blvd 25', 7, 3, False, False)",
-                "INSERT INTO Orders (destination, priority, totalItems, allProdAvail, delivered) VALUES ('Israel, Rishon LeZion, Rothschild St 40', 8, 2, True, True)",
-                "INSERT INTO Orders (destination, priority, totalItems, allProdAvail, delivered) VALUES ('Israel, Petah Tikva, Jabotinsky St 50', 9, 5, False, False)",
-                "INSERT INTO Orders (destination, priority, totalItems, allProdAvail, delivered) VALUES ('Israel, Holon, Sokolov St 60', 10, 4, True, True)"
+                "INSERT INTO Orders (destination, priority, totalItems, allProdAvail, delivered) VALUES ('Israel, Netanya, Herzl St 30', 1, 1, True, True)",
+                "INSERT INTO Orders (destination, priority, totalItems, allProdAvail, delivered) VALUES ('Israel, Ashdod, HaNassi Blvd 25', 2, 3, False, False)",
+                "INSERT INTO Orders (destination, priority, totalItems, allProdAvail, delivered) VALUES ('Israel, Rishon LeZion, Rothschild St 40', 3, 2, True, True)",
+                "INSERT INTO Orders (destination, priority, totalItems, allProdAvail, delivered) VALUES ('Israel, Petah Tikva, Jabotinsky St 50', 4, 5, False, False)",
+                "INSERT INTO Orders (destination, priority, totalItems, allProdAvail, delivered) VALUES ('Israel, Holon, Sokolov St 60', 5, 4, True, True)"
             };
 
             List<Integer> orderIds = new ArrayList<>();
@@ -84,31 +84,31 @@ public class TempInsertData {
                 }
             }
 
-            // Insert into OrderProducts using the generated order IDs
-            String[] orderProductStatements = {
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(0) + ", 1, 1)",
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(0) + ", 2, 2)",
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(1) + ", 2, 3)",
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(1) + ", 3, 2)",
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(2) + ", 1, 1)",
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(2) + ", 3, 1)",
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(3) + ", 4, 2)",
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(3) + ", 5, 1)",
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(4) + ", 6, 3)",
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(4) + ", 7, 2)",
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(5) + ", 8, 1)",
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(5) + ", 9, 2)",
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(6) + ", 10, 1)",
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(6) + ", 1, 2)",
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(7) + ", 2, 3)",
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(7) + ", 3, 1)",
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(8) + ", 4, 2)",
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(8) + ", 5, 1)",
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(9) + ", 6, 3)",
-                "INSERT INTO OrderProducts (orderID, productID, quan) VALUES (" + orderIds.get(9) + ", 7, 2)"
+            // Insert into ProductsInOrder using the generated order IDs
+            String[] ProductsInOrdertatements = {
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(0) + ", 1, 1)",
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(0) + ", 2, 2)",
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(1) + ", 2, 3)",
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(1) + ", 3, 2)",
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(2) + ", 1, 1)",
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(2) + ", 3, 1)",
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(3) + ", 4, 2)",
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(3) + ", 5, 1)",
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(4) + ", 6, 3)",
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(4) + ", 7, 2)",
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(5) + ", 8, 1)",
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(5) + ", 9, 2)",
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(6) + ", 10, 1)",
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(6) + ", 1, 2)",
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(7) + ", 2, 3)",
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(7) + ", 3, 1)",
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(8) + ", 4, 2)",
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(8) + ", 5, 1)",
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(9) + ", 6, 3)",
+                "INSERT INTO ProductsInOrder (orderID, productID, quantity) VALUES (" + orderIds.get(9) + ", 7, 2)"
             };
 
-            for (String sql : orderProductStatements) {
+            for (String sql : ProductsInOrdertatements) {
                 statement.executeUpdate(sql);
             }
 
