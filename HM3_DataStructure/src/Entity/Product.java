@@ -28,8 +28,8 @@ public class Product {
     }
 
     // Setter for quantity
-    public void setQuantity(int quan) {
-        this.quantity = quan;
+    public void reduceQuantity(int quantityToReduce) {
+        this.quantity = this.quantity - quantityToReduce;
     }
 
     @Override
