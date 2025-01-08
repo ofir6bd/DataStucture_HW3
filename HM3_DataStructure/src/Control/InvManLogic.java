@@ -34,11 +34,11 @@ public class InvManLogic {
 
         	try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    int productId = rs.getInt("productID");
+                    int productID = rs.getInt("productID");
                     String productName = rs.getString("productName");
                     int quantity = rs.getInt("quantity");
                     Product product = new Product(productName, quantity);
-                    inventory.put(productId, product);
+                    inventory.put(productID, product);
                 }
             }
         } catch (SQLException e) {

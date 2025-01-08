@@ -16,6 +16,9 @@ public final class Consts {
     /*----------------------------------------- Orders QUERIES -----------------------------------------*/
     public static final String SQL_SEL_ALL_ORDERS = "SELECT * FROM Orders";
     
+    /*----------------------------------------- ProductsInOrder QUERIES -----------------------------------------*/
+    public static final String SQL_SEL_ALL_PRODUCTS_IN_ORDER = "SELECT * FROM ProductsInOrder";
+    
     // Private method to get the database path
     private static String getDBPath() {
         try {
