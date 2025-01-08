@@ -2,7 +2,7 @@ package Entity;
 
 public class Order {
 
-    private int order_id;
+	//orderID is not part of the instance it will be the key in the hashmap
     private String destination;
     private int priority;
     private int totalItems;
@@ -11,19 +11,13 @@ public class Order {
     
 
     // Constructor
-    public Order(int order_id, String destination, int priority, boolean allProdAvail, boolean delivered, int totalItems) {
-        this.order_id = order_id;
+    public Order(String destination, int priority, int totalItems, boolean allProdAvail, boolean delivered) {
         this.destination = destination;
         this.priority = priority;
         this.totalItems = totalItems;
         this.allProdAvail = allProdAvail;
         this.delivered = delivered;
         
-    }
-
-    // Getter for order_id
-    public int getOrderID() {
-        return order_id;
     }
 
     // Getter for destination
@@ -79,8 +73,7 @@ public class Order {
     @Override
     public String toString() {
         return "Orders{" +
-                "order_id=" + order_id +
-                ", destination='" + destination + '\'' +
+                "destination='" + destination + '\'' +
                 ", priority=" + priority +
                 ", totalItems=" + totalItems +
                 ", allProdAvail=" + allProdAvail +

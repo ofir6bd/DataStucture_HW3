@@ -10,8 +10,11 @@ public final class Consts {
     protected static final String DB_FILEPATH = getDBPath();
     public static final String CONN_STR = "jdbc:ucanaccess://" + DB_FILEPATH + ";COLUMNORDER=DISPLAY";
     
-    /*----------------------------------------- Manufacturer QUERIES -----------------------------------------*/
+    /*----------------------------------------- Products QUERIES -----------------------------------------*/
     public static final String SQL_SEL_ALL_PROD = "SELECT * FROM Products";
+    
+    /*----------------------------------------- Orders QUERIES -----------------------------------------*/
+    public static final String SQL_SEL_ALL_ORDERS = "SELECT * FROM Orders";
     
     // Private method to get the database path
     private static String getDBPath() {

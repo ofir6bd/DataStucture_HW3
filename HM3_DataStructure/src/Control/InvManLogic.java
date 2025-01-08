@@ -1,4 +1,5 @@
 package Control;
+
 import Entity.Product;
 import Entity.Consts;
 import java.util.HashMap;
@@ -20,7 +21,7 @@ public class InvManLogic {
     	loadInventoryFromDB();
     }
 
-    // Method to get the singleton instance of CountryLogic
+    // Method to get the singleton instance of InvManLogic
     public static InvManLogic getInstance() {
         if (_instance == null)
             _instance = new InvManLogic();
@@ -33,10 +34,10 @@ public class InvManLogic {
 
         	try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    int productId = rs.getInt("product_id");
-                    String productName = rs.getString("product_name");
+                    int productId = rs.getInt("productID");
+                    String productName = rs.getString("productName");
                     int quantity = rs.getInt("quantity");
-                    Product product = new Product(productId, productName, quantity);
+                    Product product = new Product(productName, quantity);
                     inventory.put(productId, product);
                 }
             }
@@ -45,23 +46,25 @@ public class InvManLogic {
         }
     }
 
- // Method to print the inventory in a nice format
+    // Method to print the inventory in a nice format
     public void printInventory() {
         System.out.println("Inventory:");
         System.out.println("-------------------------------------------------");
         System.out.printf("%-10s %-20s %-10s%n", "Product ID", "Product Name", "Quantity");
         System.out.println("-------------------------------------------------");
-        for (Product product : inventory.values()) {
-            System.out.printf("%-10d %-20s %-10d%n", product.getProductID(), product.getProductName(), product.getQuan());
+        for (Map.Entry<Integer, Product> entry : inventory.entrySet()) {
+            Integer productId = entry.getKey();
+            Product product = entry.getValue();
+            System.out.printf("%-10d %-20s %-10d%n", productId, product.getProductName(), product.getQuantity());
         }
         System.out.println("-------------------------------------------------");
     }
    
     public static void main(String[] args) {
-        // יצירת המחסן ומערכת ניהול ההזמנות
+        // Create the inventory and order management system
         InvManLogic inst = InvManLogic.getInstance();
         
-        // הדפסת המלאי
+        // Print the inventory
         inst.printInventory();
     }
 

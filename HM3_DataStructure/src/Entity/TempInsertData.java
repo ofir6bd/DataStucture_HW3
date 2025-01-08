@@ -45,16 +45,16 @@ public class TempInsertData {
 
             // Insert into Products
             String[] productStatements = {
-                "INSERT INTO Products (product_id, product_name, quantity) VALUES (1, 'Table', 2)",
-                "INSERT INTO Products (product_id, product_name, quantity) VALUES (2, 'Chair', 8)",
-                "INSERT INTO Products (product_id, product_name, quantity) VALUES (3, 'Picture', 2)",
-                "INSERT INTO Products (product_id, product_name, quantity) VALUES (4, 'Lamp', 5)",
-                "INSERT INTO Products (product_id, product_name, quantity) VALUES (5, 'Sofa', 3)",
-                "INSERT INTO Products (product_id, product_name, quantity) VALUES (6, 'Desk', 4)",
-                "INSERT INTO Products (product_id, product_name, quantity) VALUES (7, 'Bookshelf', 6)",
-                "INSERT INTO Products (product_id, product_name, quantity) VALUES (8, 'Bed', 1)",
-                "INSERT INTO Products (product_id, product_name, quantity) VALUES (9, 'Dresser', 2)",
-                "INSERT INTO Products (product_id, product_name, quantity) VALUES (10, 'Nightstand', 7)"
+                "INSERT INTO Products (productID, productName, quantity) VALUES (1, 'Table', 2)",
+                "INSERT INTO Products (productID, productName, quantity) VALUES (2, 'Chair', 8)",
+                "INSERT INTO Products (productID, productName, quantity) VALUES (3, 'Picture', 2)",
+                "INSERT INTO Products (productID, productName, quantity) VALUES (4, 'Lamp', 5)",
+                "INSERT INTO Products (productID, productName, quantity) VALUES (5, 'Sofa', 3)",
+                "INSERT INTO Products (productID, productName, quantity) VALUES (6, 'Desk', 4)",
+                "INSERT INTO Products (productID, productName, quantity) VALUES (7, 'Bookshelf', 6)",
+                "INSERT INTO Products (productID, productName, quantity) VALUES (8, 'Bed', 1)",
+                "INSERT INTO Products (productID, productName, quantity) VALUES (9, 'Dresser', 2)",
+                "INSERT INTO Products (productID, productName, quantity) VALUES (10, 'Nightstand', 7)"
             };
 
             for (String sql : productStatements) {
