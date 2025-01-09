@@ -1,21 +1,18 @@
 package Control;
 
 import Entity.Order;
-import Entity.ProductsInOrder;
 import java.util.HashMap;
 import java.util.Map;
-
 
 public class OrdManLogic {
 	
 	private static OrdManLogic _instance;
 	private Map<Integer, Order> orders;
-	private Map<Integer, Map<Integer, ProductsInOrder>> productsInOrders;
-
+	private int orderNum = 1; 
+	
     // Private constructor to prevent instantiation
     private OrdManLogic() {
     	this.orders = new HashMap<>();
-    	this.productsInOrders = new HashMap<>();
     }
 
     // Method to get the singleton instance of OrderManLogic
@@ -25,7 +22,36 @@ public class OrdManLogic {
         return _instance;
     }
     
-    // Method to print the orders in a nice format
+    public boolean addOrder(String destination, int priority,int[] productsInOrder) {
+        // Validate parameters in a single if statement
+        if (destination == null || destination.trim().isEmpty() || priority < 0 || priority > 5 || productsInOrder.length %2 != 0) {
+            return false; // Invalid parameters
+        }
+
+        // Create a new map for products in the order
+        Map<Integer, Integer> productsInOrderMap = new HashMap<>();
+        int i = 0;
+        int totalItems = 0;
+        boolean allProdAvail = true;
+        ProdManLogic prodMan = ProdManLogic.getInstance();
+        
+        while ( i < productsInOrder.length ) {
+        	int productID = productsInOrder[i];
+        	int quantity = productsInOrder[i + 1];
+        	totalItems += quantity;
+            productsInOrderMap.put(productID, quantity);
+            if (!prodMan.checkAvailability(productID, quantity)) {
+            	allProdAvail = false;
+            }
+            i = i + 2;
+        }
+        Order newOrder = new Order(destination, priority, totalItems, allProdAvail, false);
+        orders.put(orderNum,newOrder); // Assuming orders is a collection of Order objects
+        this.orderNum += 1;
+        return true; // Order added successfully
+    }
+    
+ // Method to print the orders in a nice format
     public void printOrders() {
         System.out.println("Orders:");
         System.out.println("------------------------------------------------------------------------------------------------------------");
@@ -39,27 +65,19 @@ public class OrdManLogic {
         System.out.println("------------------------------------------------------------------------------------------------------------");
     }
     
-    public void addOrder(String destination, int priority, int totalItems, boolean allProdAvail, boolean delivered) {
-    	
-    	Order newOrder = new Order(destination, priority, totalItems, allProdAvail, delivered);
-//    	TODO: how to get the orderID
-    	orders.put(200, newOrder);
-    	System.out.println("done");
-    }
-    
-    // Method to print the products in orders in a nice format
-    public void printProductsInOrders() {
-        System.out.println("Products in Orders:");
-        System.out.println("------------------------------------------------------------------------------------------------------------");
-        System.out.printf("%-10s %-10s %-10s%n", "Order ID", "Product ID", "Quantity");
-        System.out.println("------------------------------------------------------------------------------------------------------------");
-        for (Map.Entry<Integer, Map<Integer, ProductsInOrder>> orderEntry : productsInOrders.entrySet()) {
-            Integer orderId = orderEntry.getKey();
-            for (Map.Entry<Integer, ProductsInOrder> productEntry : orderEntry.getValue().entrySet()) {
-                ProductsInOrder productsInOrder = productEntry.getValue();
-                System.out.printf("%-10d %-10d %-10d%n", productsInOrder.getOrderID(), productsInOrder.getProductID(), productsInOrder.getquantity());
-            }
-        }
-        System.out.println("------------------------------------------------------------------------------------------------------------");
-    }
+//    // Method to print the products in orders in a nice format
+//    public void printProductsInOrders() {
+//        System.out.println("Products in Orders:");
+//        System.out.println("------------------------------------------------------------------------------------------------------------");
+//        System.out.printf("%-10s %-10s %-10s%n", "Order ID", "Product ID", "Quantity");
+//        System.out.println("------------------------------------------------------------------------------------------------------------");
+//        for (Map.Entry<Integer, Map<Integer, ProductsInOrder>> orderEntry : productsInOrders.entrySet()) {
+//            Integer orderId = orderEntry.getKey();
+//            for (Map.Entry<Integer, ProductsInOrder> productEntry : orderEntry.getValue().entrySet()) {
+//                ProductsInOrder productsInOrder = productEntry.getValue();
+//                System.out.printf("%-10d %-10d %-10d%n", productsInOrder.getOrderID(), productsInOrder.getProductID(), productsInOrder.getquantity());
+//            }
+//        }
+//        System.out.println("------------------------------------------------------------------------------------------------------------");
+//    }
 }

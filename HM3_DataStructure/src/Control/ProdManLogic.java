@@ -7,14 +7,14 @@ import java.util.Map;
 public class ProdManLogic {
 	
 	private static ProdManLogic _instance; // Singleton instance
-	private Map<Integer, Product> products; // inventory as map
+	private Map<Integer, Product> products; // Inventory as a map
 	
     // Private constructor to prevent instantiation
     private ProdManLogic() {
     	this.products = new HashMap<>();
     }
 
-    // Method to get the singleton instance of InvManLogic
+    // Method to get the singleton instance of ProdManLogic
     public static ProdManLogic getInstance() {
         if (_instance == null)
             _instance = new ProdManLogic();
@@ -23,9 +23,11 @@ public class ProdManLogic {
     
     // Method to add a new product to the inventory
     public boolean addProduct(Integer productID, String productName, int quantity) {
-        if (productID == null || productName == null || productName.trim().isEmpty() || quantity < 0) {
+        // Validate input parameters
+	if (productID == null || productName == null || productName.trim().isEmpty() || quantity < 0) {
             return false;
         }
+        // Create a new product and add it to the inventory
         Product newProduct = new Product(productName, quantity);
         products.put(productID, newProduct);
         return true;
@@ -34,12 +36,11 @@ public class ProdManLogic {
     // Method to delete a product from the inventory
     public boolean deleteProduct(int productID) {
     	Product product = products.get(productID);
-    	if (product != null) { // if product exist
+    	if (product != null) { // If product exists
     		products.remove(productID);
     		return true;
     	}
     	return false;
-    	
     }
     
     // Method to check the availability of a product in the inventory
@@ -57,8 +58,8 @@ public class ProdManLogic {
     		return false;
     	}
     	Product product = products.get(productID);
-    	if (product != null) {       // if product exist
-    		if (checkAvailability(product, quantityToReduce)){
+    	if (product != null) { // If product exists
+    		if (checkAvailability(product, quantityToReduce)) {
     			product.reduceQuantity(quantityToReduce); 
     			return true;
     		}
@@ -68,9 +69,9 @@ public class ProdManLogic {
     	
     }
     
-    // Overloading method to check the availability of a product in the inventory
+    // Overloaded method to check the availability of a product in the inventory
     public boolean checkAvailability(Product product, int quantityToCheck) {
-    	if (product.getQuantity() >= quantityToCheck) {  //checking if product not null in "reduceQuantity"
+    	if (product.getQuantity() >= quantityToCheck) { // Checking if product is not null in "reduceQuantity"
     		return true; // Product is available in the required quantity
     	}
     	return false; // Product is not available or not enough quantity

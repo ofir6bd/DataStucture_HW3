@@ -1,24 +1,26 @@
 package Control;
 
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
 	public static void main(String[] args) {
 		ProdManLogic prodMan = ProdManLogic.getInstance();
 		
-		prodMan.addProduct(1, "Table", 2);
-		prodMan.addProduct(2, "Chair", 8);
-		prodMan.addProduct(3, "Picture", 2);
-		prodMan.addProduct(4, "Lamp", 5);
-		prodMan.addProduct(5, "Sofa", 3);
-		prodMan.addProduct(6, "Desk", 4);
-		prodMan.addProduct(7, "Bookshelf", 6);
-		prodMan.addProduct(8, "Bed", 1);
-		prodMan.addProduct(9, "Dresser", 2);
-		prodMan.addProduct(10, "Nightstand", 7);
+		prodMan.addProduct(1, "Table", 24);
+		prodMan.addProduct(2, "Chair", 40);
+		prodMan.addProduct(3, "Picture", 20);
+		prodMan.addProduct(4, "Lamp", 55);
+		prodMan.addProduct(5, "Sofa", 32);
+		prodMan.addProduct(6, "Desk", 41);
+		prodMan.addProduct(7, "Bookshelf", 64);
+		prodMan.addProduct(8, "Bed", 13);
+		prodMan.addProduct(9, "Dresser", 22);
+		prodMan.addProduct(10, "Nightstand", 74);
 		prodMan.printInventory();
 		System.out.println("Check Availability: " + prodMan.checkAvailability(2, 7));
-		System.out.println("Reduce Quantity: " + prodMan.reduceQuantity(1, 2));
+		System.out.println("Reduce Quantity: " + prodMan.reduceQuantity(1, 22));
 		System.out.println("Delete Product: " + prodMan.deleteProduct(10));
 		prodMan.printInventory();
 		
@@ -34,10 +36,22 @@ public class Main {
 		System.out.println("Reduce Quantity(More than available): " + prodMan.reduceQuantity(2, 100)); //More than available
 		System.out.println("Delete Product(ProductID not exist): " + prodMan.deleteProduct(99)); // ProductID not exist
 		prodMan.printInventory();
-
 		
-//		OrdManLogic ordMan = OrdManLogic.getInstance();
-//		ordMan.printOrders();
+		//////Orders//////
+		System.out.println("");
+		System.out.println("*******Orders*******");
+		
+		OrdManLogic ordMan = OrdManLogic.getInstance();
+		ordMan.addOrder("Israel, Tel Aviv, Rothschild Blvd 1", 1, new int[]{1, 2, 3, 4, 5, 6, 7, 8});
+		ordMan.addOrder("Israel, Rishon LeZion, Rabin St 2", 2, new int[]{1, 2, 3, 4, 5, 6, 7, 80}); 
+		ordMan.addOrder("Israel, Haifa, Herzl St 3", 3, new int[]{1, 2, 3, 4, 5, 6});
+		ordMan.addOrder("Israel, Eilat, Ben Gurion St 4", 4, new int[]{1, 2, 3, 4, 66, 5, 6, 7, 8}); 
+		ordMan.addOrder("Israel, Jerusalem, King George St 5", 5, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
+		ordMan.addOrder("Israel, Beersheba, Weizmann St 6", 0, new int[]{1, 2, 3, 4, 5, 6, 7, 8}); 
+		ordMan.addOrder("Israel, Netanya, Dizengoff St 7", 1, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+		ordMan.addOrder("Israel, Ashdod, Begin St 8", 2, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 1}); 
+		ordMan.addOrder("Israel, Holon, Jabotinsky St 9", 3, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14});
+		ordMan.printOrders();
 //		ordMan.addOrder("Israel, Rishon LeZion, Rabin St 2", 4, 10, true,false);
 //		ordMan.printOrders();
 	}
