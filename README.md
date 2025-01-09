@@ -1,5 +1,6 @@
 # DataStucture_HW3
 
+- In add product- if the productID already exists we assume it's intential inorsder rto replace the product in the system.
 - The products order is not importent so binary tree is not benefitial, 
 we do need to get an instance in no time, so hashmap is doing it in O(1)
 since it performing a function on the productID and get the instnce of Product

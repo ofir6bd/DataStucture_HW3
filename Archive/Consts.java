@@ -11,13 +11,15 @@ public final class Consts {
     public static final String CONN_STR = "jdbc:ucanaccess://" + DB_FILEPATH + ";COLUMNORDER=DISPLAY";
     
     /*----------------------------------------- Products QUERIES -----------------------------------------*/
-    public static final String SQL_SEL_ALL_PROD = "SELECT * FROM Products";
+    public static final String SQL_SEL_ALL_PRODUCTS = "SELECT * FROM Products";
+    public static final String SQL_INS_PRODUCT = "INSERT INTO Products (productID, productName, quantity) VALUES (?, ?, ?)";
     
     /*----------------------------------------- Orders QUERIES -----------------------------------------*/
     public static final String SQL_SEL_ALL_ORDERS = "SELECT * FROM Orders";
     
     /*----------------------------------------- ProductsInOrder QUERIES -----------------------------------------*/
     public static final String SQL_SEL_ALL_PRODUCTS_IN_ORDER = "SELECT * FROM ProductsInOrder";
+    
     
     // Private method to get the database path
     private static String getDBPath() {

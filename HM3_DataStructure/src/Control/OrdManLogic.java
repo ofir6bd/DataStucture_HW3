@@ -2,14 +2,9 @@ package Control;
 
 import Entity.Order;
 import Entity.ProductsInOrder;
-import Entity.Consts;
 import java.util.HashMap;
 import java.util.Map;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
 
 public class OrdManLogic {
 	
@@ -21,8 +16,6 @@ public class OrdManLogic {
     private OrdManLogic() {
     	this.orders = new HashMap<>();
     	this.productsInOrders = new HashMap<>();
-    	loadOrdersFromDB();
-    	loadProductsInOrdersFromDB();
     }
 
     // Method to get the singleton instance of OrderManLogic
@@ -32,28 +25,6 @@ public class OrdManLogic {
         return _instance;
     }
     
-    private void loadOrdersFromDB() {
-        try (Connection conn = DriverManager.getConnection(Consts.CONN_STR);
-             PreparedStatement stmt = conn.prepareStatement(Consts.SQL_SEL_ALL_ORDERS)) {
-
-        	try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    int orderId = rs.getInt("orderID");
-                    String destination = rs.getString("destination");
-                    int priority = rs.getInt("priority");
-                    int totalItems = rs.getInt("totalItems");
-                    boolean allProdAvail = rs.getBoolean("allProdAvail");
-                    boolean delivered = rs.getBoolean("delivered");
-                    
-                    Order order = new Order(destination, priority, totalItems, allProdAvail, delivered);
-                    orders.put(orderId, order);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     // Method to print the orders in a nice format
     public void printOrders() {
         System.out.println("Orders:");
@@ -68,29 +39,8 @@ public class OrdManLogic {
         System.out.println("------------------------------------------------------------------------------------------------------------");
     }
     
-    private void loadProductsInOrdersFromDB() {
-        try (Connection conn = DriverManager.getConnection(Consts.CONN_STR);
-             PreparedStatement stmt = conn.prepareStatement(Consts.SQL_SEL_ALL_PRODUCTS_IN_ORDER)) {
-
-        	try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    int orderID = rs.getInt("orderID");
-                    int productID = rs.getInt("productID");
-                    int quantity = rs.getInt("quantity");
-                    
-                    ProductsInOrder productsInOrder = new ProductsInOrder(orderID, productID, quantity);
-                    
-                    productsInOrders
-                        .computeIfAbsent(orderID, k -> new HashMap<>())
-                        .put(productID, productsInOrder);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    
     public void addOrder(String destination, int priority, int totalItems, boolean allProdAvail, boolean delivered) {
+    	
     	Order newOrder = new Order(destination, priority, totalItems, allProdAvail, delivered);
 //    	TODO: how to get the orderID
     	orders.put(200, newOrder);
