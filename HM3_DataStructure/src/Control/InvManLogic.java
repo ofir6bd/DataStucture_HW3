@@ -13,7 +13,7 @@ import java.sql.SQLException;
 public class InvManLogic {
 	
 	private static InvManLogic _instance; // Singleton instance
-	private Map<Integer, Product> inventory; // In-memory inventory map
+	private Map<Integer, Product> inventory; // inventory as map
 	
     // Private constructor to prevent instantiation
     private InvManLogic() {
@@ -46,7 +46,7 @@ public class InvManLogic {
             e.printStackTrace();
         }
     }
-
+ 
     // Method to add a new product to the inventory
     public void addProduct(String productName, int quantity) {
     	// TODO: need to check who assigns the ID and if it already exists
@@ -57,21 +57,10 @@ public class InvManLogic {
     // Method to delete a product from the inventory
     public void deleteProduct(int productID) {
     	Product product = inventory.get(productID);
-    	if (product != null) {
+    	if (product != null) { // if product exist
     		inventory.remove(productID);
     	}else {
     		System.out.println("Product does not exist");
-    	}
-    	
-    }
-    
-    // Method to reduce the quantity of a product in the inventory
-    public void reduceQuantity(int productID, int quantityToReduce) {
-    	Product product = inventory.get(productID);
-    	if (product != null) {
-    	    product.reduceQuantity(quantityToReduce); 
-    	} else {
-    	    System.out.println("Product does not exist");
     	}
     }
     
@@ -81,8 +70,32 @@ public class InvManLogic {
     	if (product != null && product.getQuantity() >= quantityToCheck) {
     		return true; // Product is available in the required quantity
     	}
-    	return false; // Product is not available or not enught quantity
+    	return false; // Product is not available or not enough quantity
     }
+    
+    // Method to reduce the quantity of a product in the inventory
+    public boolean reduceQuantity(int productID, int quantityToReduce) {
+    	Product product = inventory.get(productID);
+    	if (product != null) {       // if product exist
+    		if (checkAvailability(product, quantityToReduce)){
+    			product.reduceQuantity(quantityToReduce); 
+    			return true;
+    		}
+    	    return false;
+    	}
+    	System.out.println("Product does not exist");
+    	return false;
+    	
+    }
+    
+    // Overloading method to check the availability of a product in the inventory
+    public boolean checkAvailability(Product product, int quantityToCheck) {
+    	if (product != null && product.getQuantity() >= quantityToCheck) {
+    		return true; // Product is available in the required quantity
+    	}
+    	return false; // Product is not available or not enough quantity
+    }
+    
     
     
     // Method to print the inventory in a nice format
@@ -98,14 +111,4 @@ public class InvManLogic {
         }
         System.out.println("-------------------------------------------------");
     }
-   
-//    public static void main(String[] args) {
-//        // Create the inventory and order management system
-//        InvManLogic inst = InvManLogic.getInstance();
-//        
-//        // Print the inventory
-//        inst.printInventory();
-//    }
-
-
 }

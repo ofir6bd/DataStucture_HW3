@@ -11,14 +11,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class OrderManLogic {
+public class OrdManLogic {
 	
-	private static OrderManLogic _instance;
+	private static OrdManLogic _instance;
 	private Map<Integer, Order> orders;
 	private Map<Integer, Map<Integer, ProductsInOrder>> productsInOrders;
 
     // Private constructor to prevent instantiation
-    private OrderManLogic() {
+    private OrdManLogic() {
     	this.orders = new HashMap<>();
     	this.productsInOrders = new HashMap<>();
     	loadOrdersFromDB();
@@ -26,9 +26,9 @@ public class OrderManLogic {
     }
 
     // Method to get the singleton instance of OrderManLogic
-    public static OrderManLogic getInstance() {
+    public static OrdManLogic getInstance() {
         if (_instance == null)
-            _instance = new OrderManLogic();
+            _instance = new OrdManLogic();
         return _instance;
     }
     
@@ -90,6 +90,13 @@ public class OrderManLogic {
         }
     }
     
+    public void addOrder(String destination, int priority, int totalItems, boolean allProdAvail, boolean delivered) {
+    	Order newOrder = new Order(destination, priority, totalItems, allProdAvail, delivered);
+//    	TODO: how to get the orderID
+    	orders.put(200, newOrder);
+    	System.out.println("done");
+    }
+    
     // Method to print the products in orders in a nice format
     public void printProductsInOrders() {
         System.out.println("Products in Orders:");
@@ -104,16 +111,5 @@ public class OrderManLogic {
             }
         }
         System.out.println("------------------------------------------------------------------------------------------------------------");
-    }
-    public static void main(String[] args) {
-        // Create the order management system
-        OrderManLogic inst = OrderManLogic.getInstance();
-        
-        // Print the orders
-        inst.printOrders();
-        
-        // Print the products in orders
-        inst.printProductsInOrders();
-        
     }
 }
