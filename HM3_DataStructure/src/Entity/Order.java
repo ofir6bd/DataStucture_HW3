@@ -6,18 +6,15 @@ public class Order {
     private String destination;
     private int priority;
     private int totalItems;
-    private boolean allProdAvail;
-    private boolean delivered;
+    private boolean allProdAvail = false;
+    private boolean delivered = false;
     
 
     // Constructor
-    public Order(String destination, int priority, int totalItems, boolean allProdAvail, boolean delivered) {
+    public Order(String destination, int priority, int totalItems) {
         this.destination = destination;
         this.priority = priority;
         this.totalItems = totalItems;
-        this.allProdAvail = allProdAvail;
-        this.delivered = delivered;
-        
     }
 
     // Getter for destination
