@@ -8,7 +8,7 @@ public class Main {
 	public static void main(String[] args) {
 		ProdManLogic prodMan = ProdManLogic.getInstance();
 		
-		prodMan.addProduct(1, "Table", 24);
+		prodMan.addProduct(1, "Table", 64);
 		prodMan.addProduct(2, "Chair", 40);
 		prodMan.addProduct(3, "Picture", 20);
 		prodMan.addProduct(4, "Lamp", 55);
@@ -47,8 +47,8 @@ public class Main {
 		ordMan.addOrder("Israel, Haifa, Herzl St 3", 3, new int[]{1, 2, 3, 4, 5, 6});
 		ordMan.addOrder("Israel, Eilat, Ben Gurion St 4", 4, new int[]{1, 2, 3, 4, 66, 5, 6, 7, 8, 3}); 
 		ordMan.addOrder("Israel, Jerusalem, King George St 5", 5, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10});
-		ordMan.addOrder("Israel, Beersheba, Weizmann St 6", 1, new int[]{1, 2, 3, 4, 5, 6, 7, 8}); 
-		ordMan.addOrder("Israel, Netanya, Dizengoff St 7", 1, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+		ordMan.addOrder("Israel, Beersheba, Weizmann St 6", 1, new int[]{1, 2, 3, 4, 5, 6, 7, 100}); 
+		ordMan.addOrder("Israel, Netanya, Dizengoff St 7", 1, new int[]{2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
 		ordMan.addOrder("Israel, Ashdod, Begin St 8", 2, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 1}); 
 		ordMan.addOrder("Israel, Holon, Jabotinsky St 9", 3, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 2, 14});
 		ordMan.addOrder("Israel, Bat-Yam, Jabotinsky St 12", 2, new int[]{1, 2, 2, 4, 3, 6, 4, 8, 5, 10, 6, 12, 7, 2});
@@ -56,14 +56,17 @@ public class Main {
 		
 		
 		//insert 5 more products
-//		prodMan.addProduct(11, "Wardrobe", 50);
-//		prodMan.addProduct(12, "Stool", 15);
-//		prodMan.addProduct(13, "Mirror", 30);
-//		prodMan.addProduct(14, "TV Stand", 45);
-//		prodMan.addProduct(15, "Ottoman", 25);
-//		prodMan.printInventory();
-//		ordMan.printAllOrdersFromQueue();
-//		ordMan.processNextOrder(1);
+		prodMan.addProduct(11, "Wardrobe", 50);
+		prodMan.addProduct(12, "Stool", 15);
+		prodMan.addProduct(13, "Mirror", 30);
+		prodMan.addProduct(14, "TV Stand", 45);
+		prodMan.addProduct(15, "Ottoman", 25);
+		prodMan.printInventory();
+		ordMan.printAllOrdersFromQueue();
+		ordMan.processNextOrder(8);
+		ordMan.printAllOrdersFromQueue();
+		
+		
 	}
 
 }

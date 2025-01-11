@@ -5,16 +5,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 class QueNode {
-	private int orderID;
+    private int orderID;
     private Order order;
     private QueNode next;
 
     public QueNode(int orderID, Order order, QueNode next) {
-    	this.orderID = orderID;
+        this.orderID = orderID;
         this.order = order;
         this.next = next;
     }
-    
+
     public int getOrderID() {
         return orderID;
     }
@@ -22,6 +22,7 @@ class QueNode {
     public void setOrderID(int orderID) {
         this.orderID = orderID;
     }
+
     public Order getOrder() {
         return order;
     }
@@ -89,18 +90,15 @@ public class OrdManLogic {
         if (prioQueStart[priority - 1] == null) { // Initiate prioQueStart  
             prioQueStart[priority - 1] = newNode;
             prioQueEnd[priority - 1] = newNode;
-        }
-        else {
-        	QueNode endNode = prioQueEnd[priority - 1];
-        	endNode.setNext(newNode); // connect newNode to the end of the Que
-        	prioQueEnd[priority - 1] = newNode;
+        } else {
+            QueNode endNode = prioQueEnd[priority - 1];
+            endNode.setNext(newNode); // connect newNode to the end of the Que
+            prioQueEnd[priority - 1] = newNode;
         }
         this.orderID += 1;
         return true; // Order added successfully
     }
 
-
-    
     public boolean processNextOrder(int kOrders) {
         int k = 0;
         ProdManLogic prodMan = ProdManLogic.getInstance();
@@ -111,30 +109,31 @@ public class OrdManLogic {
             }
             QueNode preCurrentNode = prioQueStart[priority - 1];
             QueNode currentNode = prioQueStart[priority - 1];
-            
+
             while (currentNode != null && k < kOrders) {
-                Order order = currentNode.getOrder();
-                boolean availability = prodMan.checkAvailability(order.getProductsInOrderMap());
-                
-                if (availability) {
-                	prodMan.reduceQuantity(order.getProductsInOrderMap());
-                	order.setDelivered(true);
-                	prioQueStart[priority - 1, currentNode.getNext()];
-                	System.out.println("Done");
-                	
-                	if (preCurrentNode == currentNode) {
-                		
-                	}else {
-                		
-                	}
-                }else {
-                	
+            	k++;
+            	Order order = currentNode.getOrder();
+                boolean available = prodMan.checkAvailability(order.getProductsInOrderMap());
+                if (available) {
+                    prodMan.reduceQuantity(order.getProductsInOrderMap());
+                    order.setDelivered(true);
+                    
+                    if (preCurrentNode == currentNode) {
+                    	prioQueStart[priority - 1] = currentNode.getNext();
+                    	preCurrentNode = prioQueStart[priority - 1];
+                    	currentNode = prioQueStart[priority - 1];
+                    }else {
+                    	System.out.println(currentNode.getNext());
+                    	preCurrentNode.setNext(currentNode.getNext());
+                    	currentNode =  currentNode.getNext();	
+                    	if (currentNode == null) {
+                    		prioQueEnd[priority - 1] = preCurrentNode.getNext();	
+                    	}
+                    }
+                } else {
+                	preCurrentNode = currentNode;
+                	currentNode = currentNode.getNext();
                 }
-                System.out.println("Availability: " + availability);
-                
-                System.out.printf("%-10d %-40s %-10d %-12d %-15b %-10b%n", currentNode.getOrderID(), order.getDestination(), order.getPriority(), order.getTotalItems(), order.isDelivered());
-                currentNode = currentNode.getNext();
-                k++;
             }
         }
         return false;
@@ -144,7 +143,7 @@ public class OrdManLogic {
     public void printOrders() {
         System.out.println("Orders:");
         System.out.println("------------------------------------------------------------------------------------------------------------");
-        System.out.printf("%-10s %-40s %-10s %-12s %-15s %-10s%n", "Order ID", "Destination", "Priority", "Total Items", "All Prod Avail", "Delivered");
+        System.out.printf("%-10s %-40s %-10s %-12s %-10s%n", "Order ID", "Destination", "Priority", "Total Items", "Delivered");
         System.out.println("------------------------------------------------------------------------------------------------------------");
         for (Map.Entry<Integer, Order> entry : orders.entrySet()) {
             Integer orderId = entry.getKey();
@@ -160,7 +159,7 @@ public class OrdManLogic {
         System.out.printf("%-10s %-40s %-10s %-12s %-15s %-10s%n", "Order ID", "Destination", "Priority", "Total Items", "All Prod Avail", "Delivered");
         System.out.println("------------------------------------------------------------------------------------------------------------");
         for (int priority = 1; priority <= 5; priority++) {
-            Node currentNode = prioQueStart.get(priority);
+            QueNode currentNode = prioQueStart[priority - 1];
             while (currentNode != null) {
                 Order order = currentNode.getOrder();
                 System.out.printf("%-10d %-40s %-10d %-12d %-10b%n", currentNode.getOrderID(), order.getDestination(), order.getPriority(), order.getTotalItems(), order.isDelivered());
@@ -170,19 +169,4 @@ public class OrdManLogic {
         System.out.println("------------------------------------------------------------------------------------------------------------");
     }
     
-//    // Method to print the products in orders in a nice format
-//    public void printProductsInOrders() {
-//        System.out.println("Products in Orders:");
-//        System.out.println("------------------------------------------------------------------------------------------------------------");
-//        System.out.printf("%-10s %-10s %-10s%n", "Order ID", "Product ID", "Quantity");
-//        System.out.println("------------------------------------------------------------------------------------------------------------");
-//        for (Map.Entry<Integer, Map<Integer, ProductsInOrder>> orderEntry : productsInOrders.entrySet()) {
-//            Integer orderId = orderEntry.getKey();
-//            for (Map.Entry<Integer, ProductsInOrder> productEntry : orderEntry.getValue().entrySet()) {
-//                ProductsInOrder productsInOrder = productEntry.getValue();
-//                System.out.printf("%-10d %-10d %-10d%n", productsInOrder.getOrderID(), productsInOrder.getProductID(), productsInOrder.getquantity());
-//            }
-//        }
-//        System.out.println("------------------------------------------------------------------------------------------------------------");
-//    }
 }
