@@ -153,15 +153,19 @@ class AVLTree {
     }
     
     // A utility function to print in-order traversal of the tree in descending order
-    static void inOrderDescendingOrders(Node root, Map<Integer, Order> orders) {
-        if (root != null) {
-            inOrderDescendingOrders(root.right, orders);
-            for (int orderId : root.getarrayList()) {
-                Order order = orders.get(orderId);
-                System.out.printf("%-10d %-40s %-15d%n", 
-                    orderId, order.getDestination(), order.getTotalItems());
+    static void inOrderDescendingOrders(Node root, Map<Integer, Order> orders, int k, int[] counter) {
+        if (root != null && counter[0] < k) {
+            inOrderDescendingOrders(root.right, orders, k, counter);
+            if (counter[0] < k) {
+                for (int orderId : root.getarrayList()) {
+                    if (counter[0] >= k) break;
+                    Order order = orders.get(orderId);
+                    System.out.printf("%-10d %-40s %-15d%n", 
+                        orderId, order.getDestination(), order.getTotalItems());
+                    counter[0]++;
+                }
             }
-            inOrderDescendingOrders(root.left, orders);
+            inOrderDescendingOrders(root.left, orders, k, counter);
         }
     }
 }
@@ -180,21 +184,20 @@ public class Reports {
             root = AVLTree.insert(root, product.getQuantity(), productId);
         }
         System.out.println();
-        System.out.println("-------Inventory Report by Quantity (Asc)-------");
+        System.out.println("\n---------------------------Inventory Report by Quantity (Asc)---------------------------------");
         // Print the header of the table
-        System.out.println("-------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------------------");
         System.out.println("Product ID  Product Name         Quantity  ");
-        System.out.println("-------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------------------");
         
         // Print the AVL tree in in-order traversal in ascending order
         AVLTree.inOrderAscendingProducts(root, products);
-        
-        System.out.println("-------------------------------------------------");
+
+        System.out.println("----------------------------------------------------------------------------------------------");
     }
     
     // Method to generate and print the report of the k biggest orders
-    public void getKBiggestOrders() {
-        System.out.println("----------K biggest Orders Report----------");
+    public void getKBiggestOrders(int k) {
         OrdManLogic ordMan = OrdManLogic.getInstance();
         QueNode[] prioQueStart = ordMan.getPrioQueStart(); // Get the priority queues
 
@@ -208,23 +211,22 @@ public class Reports {
                 currentNode = currentNode.getNext();
             }
         }
-
-        System.out.println();
-        System.out.println("-------Orders Report by Quantity (Desc)-------");
+        System.out.println("\n----------------------------K biggest orders by Quantity report (Desc)-------------------------------");
         // Print the header of the table
-        System.out.println("----------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------------------");
         System.out.printf("%-10s %-40s %-15s%n", "Order ID", "Destination", "Total Items");
-        System.out.println("----------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------------------");
 
         // Print the AVL tree in in-order traversal in descending order
-        AVLTree.inOrderDescendingOrders(root, ordMan.getOrders());
-
-        System.out.println("----------------------------------------------------------------");
+        int[] counter = {0}; // Counter to keep track of the number of elements printed
+        AVLTree.inOrderDescendingOrders(root, ordMan.getOrders(), k, counter);
+        System.out.println("----------------------------------------------------------------------------------------------");
     }
+
     
     // Method to generate and print the total orders report
     public void totalOrdersReport() {
-        System.out.println("----------Total Orders Report----------");
+        System.out.println("------------------------------Total Orders Report (that are in Q)-----------------------------");
         ProdManLogic prodMan = ProdManLogic.getInstance();
         OrdManLogic ordMan = OrdManLogic.getInstance();
         QueNode[] prioQueStart = ordMan.getPrioQueStart(); 
@@ -246,12 +248,10 @@ public class Reports {
             }
         }
 
-        System.out.println();
-        System.out.println("-------Orders Report by Quantity (Desc)-------");
         // Print the header of the table
-        System.out.println("--------------------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------------------");
         System.out.printf("%-10s %-40s %-15s %-10s %-10s%n", "Order ID", "Destination", "Total Items", "Priority", "Able to Deliver");
-        System.out.println("--------------------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------------------");
         for (int i = 0; i < unAbleToDeliver.size(); i++) {
             Order order = orders.get(unAbleToDeliver.get(i));
             System.out.printf("%-10d %-40s %-15d %-10d %-10s%n", 
@@ -262,6 +262,6 @@ public class Reports {
             System.out.printf("%-10d %-40s %-15d %-10d %-10s%n", 
                     ableToDeliver.get(i), order.getDestination(), order.getTotalItems(), order.getPriority(), "Yes");
         }
-        System.out.println("--------------------------------------------------------------------------------------------");
+        System.out.println("----------------------------------------------------------------------------------------------");
     }
 }

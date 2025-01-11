@@ -143,6 +143,7 @@ public class OrdManLogic {
                 Order order = currentNode.getOrder();
                 boolean available = prodMan.checkAvailability(order.getProductsInOrderMap());
                 if (available) {
+                	System.out.println("OrderID: " + currentNode.getOrderID() + " - Processed - removed from Queue");
                     prodMan.reduceQuantity(order.getProductsInOrderMap());
                     order.setDelivered(true);
                     
@@ -158,6 +159,7 @@ public class OrdManLogic {
                         }
                     }
                 } else {
+                	System.out.println("OrderID: " + currentNode.getOrderID() + " - Processed not all products available- still in Queue");
                     preCurrentNode = currentNode;
                     currentNode = currentNode.getNext();
                 }
@@ -165,35 +167,35 @@ public class OrdManLogic {
         }
         return false;
     }
-
-    // Method to print the orders in a nice format
-    public void printOrders() {
-        System.out.println("Orders:");
-        System.out.println("------------------------------------------------------------------------------------------------------------");
-        System.out.printf("%-10s %-40s %-10s %-12s %-10s%n", "Order ID", "Destination", "Priority", "Total Items", "Delivered");
-        System.out.println("------------------------------------------------------------------------------------------------------------");
-        for (Map.Entry<Integer, Order> entry : orders.entrySet()) {
-            Integer orderId = entry.getKey();
-            Order order = entry.getValue();
-            System.out.printf("%-10d %-40s %-10d %-12d %-10b%n", orderId, order.getDestination(), order.getPriority(), order.getTotalItems(), order.isDelivered());
-        }
-        System.out.println("------------------------------------------------------------------------------------------------------------");
-    }
-    
-    // Method to print all orders from the priority queues
-    public void printAllOrdersFromQueue() {
-        System.out.println("Orders from Priority Queues:");
-        System.out.println("------------------------------------------------------------------------------------------------------------");
-        System.out.printf("%-10s %-40s %-10s %-12s %-15s %-10s%n", "Order ID", "Destination", "Priority", "Total Items", "All Prod Avail", "Delivered");
-        System.out.println("------------------------------------------------------------------------------------------------------------");
-        for (int priority = 1; priority <= 5; priority++) {
-            QueNode currentNode = prioQueStart[priority - 1];
-            while (currentNode != null) {
-                Order order = currentNode.getOrder();
-                System.out.printf("%-10d %-40s %-10d %-12d %-10b%n", currentNode.getOrderID(), order.getDestination(), order.getPriority(), order.getTotalItems(), order.isDelivered());
-                currentNode = currentNode.getNext();
-            }
-        }
-        System.out.println("------------------------------------------------------------------------------------------------------------");
-    }
+//
+//    // Method to print the orders in a nice format
+//    public void printOrders() {
+//        System.out.println("Orders:");
+//        System.out.println("------------------------------------------------------------------------------------------------------------");
+//        System.out.printf("%-10s %-40s %-10s %-12s %-10s%n", "Order ID", "Destination", "Priority", "Total Items", "Delivered");
+//        System.out.println("------------------------------------------------------------------------------------------------------------");
+//        for (Map.Entry<Integer, Order> entry : orders.entrySet()) {
+//            Integer orderId = entry.getKey();
+//            Order order = entry.getValue();
+//            System.out.printf("%-10d %-40s %-10d %-12d %-10b%n", orderId, order.getDestination(), order.getPriority(), order.getTotalItems(), order.isDelivered());
+//        }
+//        System.out.println("------------------------------------------------------------------------------------------------------------");
+//    }
+//    
+//    // Method to print all orders from the priority queues
+//    public void printAllOrdersFromQueue() {
+//        System.out.println("Orders from Priority Queues:");
+//        System.out.println("------------------------------------------------------------------------------------------------------------");
+//        System.out.printf("%-10s %-40s %-10s %-12s %-15s %-10s%n", "Order ID", "Destination", "Priority", "Total Items", "All Prod Avail", "Delivered");
+//        System.out.println("------------------------------------------------------------------------------------------------------------");
+//        for (int priority = 1; priority <= 5; priority++) {
+//            QueNode currentNode = prioQueStart[priority - 1];
+//            while (currentNode != null) {
+//                Order order = currentNode.getOrder();
+//                System.out.printf("%-10d %-40s %-10d %-12d %-10b%n", currentNode.getOrderID(), order.getDestination(), order.getPriority(), order.getTotalItems(), order.isDelivered());
+//                currentNode = currentNode.getNext();
+//            }
+//        }
+//        System.out.println("------------------------------------------------------------------------------------------------------------");
+//    }
 }

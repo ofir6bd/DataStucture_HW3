@@ -7,7 +7,7 @@ import java.util.Map;
 public class ProdManLogic {
 	
 	private static ProdManLogic _instance; // Singleton instance
-	private Map<Integer, Product> products; // Inventory as a map
+	private Map<Integer, Product> products; // All products stored in Hashmap
 	
     // Private constructor to prevent instantiation
     private ProdManLogic() {
@@ -36,7 +36,7 @@ public class ProdManLogic {
 			return false;
 		}
 	
-        // Create a new product and add it to the inventory
+        // Create a new product and add it to the inventory - products map
         Product newProduct = new Product(productName, quantity);
         products.put(productID, newProduct);
         return true;
@@ -45,7 +45,7 @@ public class ProdManLogic {
     // Method to delete a product from the inventory
     public boolean deleteProduct(int productID) {
     	Product product = products.get(productID);
-    	if (product != null) { // If product exists
+    	if (product != null) { 		// If product exists
     		products.remove(productID);
     		return true;
     	}
@@ -65,7 +65,7 @@ public class ProdManLogic {
     }
     
     // Method to check the availability of a specific product in the inventory
-    public boolean checkAvailability(int productID, int quantityToCheck) {
+    private boolean checkAvailability(int productID, int quantityToCheck) {
     	Product product = products.get(productID);
     	if (product != null && quantityToCheck > 0 && product.getQuantity() >= quantityToCheck) {
     		return true; // Product is available in the required quantity
@@ -86,8 +86,7 @@ public class ProdManLogic {
     }
     
     // Method to reduce the quantity of a specific product in the inventory
-    public boolean reduceQuantity(int productID, int quantityToReduce) {
-    	
+    private boolean reduceQuantity(int productID, int quantityToReduce) {
     	if (quantityToReduce <= 0) {
     		return false;
     	}
@@ -98,27 +97,5 @@ public class ProdManLogic {
 			return true;
     	}
     	return false;
-    }
-    
-    // Overloaded method to check the availability of a product in the inventory
-    public boolean checkAvailability(Product product, int quantityToCheck) {
-    	if (product.getQuantity() >= quantityToCheck) { // Checking if product is not null in "reduceQuantity"
-    		return true; // Product is available in the required quantity
-    	}
-    	return false; // Product is not available or not enough quantity
-    }
-    
-    // Method to print the inventory in a nice format
-    public void printInventory() {
-        System.out.println("Inventory:");
-        System.out.println("-------------------------------------------------");
-        System.out.printf("%-10s %-20s %-10s%n", "Product ID", "Product Name", "Quantity");
-        System.out.println("-------------------------------------------------");
-        for (Map.Entry<Integer, Product> entry : products.entrySet()) {
-            Integer productId = entry.getKey();
-            Product product = entry.getValue();
-            System.out.printf("%-10d %-20s %-10d%n", productId, product.getProductName(), product.getQuantity());
-        }
-        System.out.println("-------------------------------------------------");
     }
 }

@@ -32,12 +32,12 @@ public class Product {
         this.quantity = this.quantity - quantityToReduce;
     }
 
-    // Overriding the toString method to provide a string representation of the Product object
-    @Override
-    public String toString() {
-        return "Product{" +
-                "productName='" + product_name + '\'' +
-                ", quantity=" + quantity +
-                '}';
-    }
+//    // Overriding the toString method to provide a string representation of the Product object
+//    @Override
+//    public String toString() {
+//        return "Product{" +
+//                "productName='" + product_name + '\'' +
+//                ", quantity=" + quantity +
+//                '}';
+//    }
 }

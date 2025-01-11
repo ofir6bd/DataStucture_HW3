@@ -68,15 +68,15 @@ public class Order {
         this.productsInOrderMap = productsInOrderMap;
     }
 
-    // Overriding the toString method to provide a string representation of the Order object
-    @Override
-    public String toString() {
-        return "Orders{" +
-                "destination='" + destination + '\'' +
-                ", priority=" + priority +
-                ", totalItems=" + totalItems +
-                ", delivered=" + delivered +
-                ", productsInOrderMap=" + productsInOrderMap +
-                '}';
-    }
+//    // Overriding the toString method to provide a string representation of the Order object
+//    @Override
+//    public String toString() {
+//        return "Orders{" +
+//                "destination='" + destination + '\'' +
+//                ", priority=" + priority +
+//                ", totalItems=" + totalItems +
+//                ", delivered=" + delivered +
+//                ", productsInOrderMap=" + productsInOrderMap +
+//                '}';
+//    }
 }
