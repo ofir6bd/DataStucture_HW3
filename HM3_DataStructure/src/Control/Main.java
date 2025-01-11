@@ -26,7 +26,7 @@ public class Main {
 		
 		//check edge cases
 		System.out.println("*******Check edge cases*******");
-		System.out.println("add Product(product id already exist - should replace): " + prodMan.addProduct(9, "Ball", 8)); //product id already exist, so it will replace the old product 
+		System.out.println("add Product(productID already exist): " + prodMan.addProduct(9, "Ball", 8)); //product id already exist, so it will replace the old product 
 		System.out.println("add Product(No product name): " + prodMan.addProduct(11, "", 7)); // no product name 
 		System.out.println("add Product(Negative quantity): " + prodMan.addProduct(12, "Ball", -1));  // Negative quantity 
 		
@@ -56,13 +56,14 @@ public class Main {
 		
 		
 		//insert 5 more products
-		prodMan.addProduct(11, "Wardrobe", 50);
-		prodMan.addProduct(12, "Stool", 15);
-		prodMan.addProduct(13, "Mirror", 30);
-		prodMan.addProduct(14, "TV Stand", 45);
-		prodMan.addProduct(15, "Ottoman", 25);
-		prodMan.printInventory();
-		ordMan.printAllOrdersFromQueue();
+//		prodMan.addProduct(11, "Wardrobe", 50);
+//		prodMan.addProduct(12, "Stool", 15);
+//		prodMan.addProduct(13, "Mirror", 30);
+//		prodMan.addProduct(14, "TV Stand", 45);
+//		prodMan.addProduct(15, "Ottoman", 25);
+//		prodMan.printInventory();
+//		ordMan.printAllOrdersFromQueue();
+//		ordMan.processNextOrder(1);
 	}
 
 }

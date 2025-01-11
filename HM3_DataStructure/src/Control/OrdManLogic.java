@@ -4,12 +4,12 @@ import Entity.Order;
 import java.util.HashMap;
 import java.util.Map;
 
-class Node {
+class QueNode {
 	private int orderID;
     private Order order;
-    private Node next;
+    private QueNode next;
 
-    public Node(int orderID, Order order, Node next) {
+    public QueNode(int orderID, Order order, QueNode next) {
     	this.orderID = orderID;
         this.order = order;
         this.next = next;
@@ -30,11 +30,11 @@ class Node {
         this.order = order;
     }
 
-    public Node getNext() {
+    public QueNode getNext() {
         return next;
     }
 
-    public void setNext(Node next) {
+    public void setNext(QueNode next) {
         this.next = next;
     }
 }
@@ -43,15 +43,15 @@ public class OrdManLogic {
 
     private static OrdManLogic _instance;
     private Map<Integer, Order> orders;
-    private Map<Integer, Node> prioQueStart;
-    private Map<Integer, Node> prioQueEnd;
+    private QueNode[] prioQueStart;
+    private QueNode[] prioQueEnd;
     private int orderID = 1;
 
     // Private constructor to prevent instantiation
     private OrdManLogic() {
         this.orders = new HashMap<>();
-        this.prioQueStart = new HashMap<>();
-        this.prioQueEnd = new HashMap<>();
+        this.prioQueStart = new QueNode[5];
+        this.prioQueEnd = new QueNode[5];
     }
 
     // Method to get the singleton instance of OrderManLogic
@@ -63,7 +63,7 @@ public class OrdManLogic {
 
     public boolean addOrder(String destination, int priority, int[] productsInOrder) {
         // Validate parameters in a single if statement
-        if (destination == null || destination.trim().isEmpty() || priority < 0 || priority > 5 || productsInOrder.length % 2 != 0) {
+        if (destination == null || destination.trim().isEmpty() || priority < 1 || priority > 5 || productsInOrder.length % 2 != 0) {
             return false; // Invalid parameters
         }
 
@@ -79,24 +79,65 @@ public class OrdManLogic {
             i = i + 2;
         }
 
-        Order newOrder = new Order(destination, priority, totalItems);
+        Order newOrder = new Order(destination, priority, totalItems, productsInOrderMap); // Pass the map to the constructor
         orders.put(orderID, newOrder); // Assuming orders is a collection of Order objects
 
-        // Create a new Node for the order
-        Node newNode = new Node(orderID,newOrder, null);
+        // Create a Queue Node for the order
+        QueNode newNode = new QueNode(orderID, newOrder, null);
 
-       // Add to prioQueue
-        if (!prioQueStart.containsKey(priority)) {// Initiate both 
-        	prioQueStart.put(priority, newNode);
-        	prioQueEnd.put(priority, newNode);
-        } else {
-        	Node currentEndNode = prioQueEnd.get(priority);
-            currentEndNode.setNext(newNode);
-        	prioQueEnd.put(priority, newNode); //replace the end node pointer
+        // Add to prioQueue
+        if (prioQueStart[priority - 1] == null) { // Initiate prioQueStart  
+            prioQueStart[priority - 1] = newNode;
+            prioQueEnd[priority - 1] = newNode;
         }
-        
+        else {
+        	QueNode endNode = prioQueEnd[priority - 1];
+        	endNode.setNext(newNode); // connect newNode to the end of the Que
+        	prioQueEnd[priority - 1] = newNode;
+        }
         this.orderID += 1;
         return true; // Order added successfully
+    }
+
+
+    
+    public boolean processNextOrder(int kOrders) {
+        int k = 0;
+        ProdManLogic prodMan = ProdManLogic.getInstance();
+
+        for (int priority = 1; priority <= 5; priority++) {
+            if (k >= kOrders) {
+                return true;
+            }
+            QueNode preCurrentNode = prioQueStart[priority - 1];
+            QueNode currentNode = prioQueStart[priority - 1];
+            
+            while (currentNode != null && k < kOrders) {
+                Order order = currentNode.getOrder();
+                boolean availability = prodMan.checkAvailability(order.getProductsInOrderMap());
+                
+                if (availability) {
+                	prodMan.reduceQuantity(order.getProductsInOrderMap());
+                	order.setDelivered(true);
+                	prioQueStart[priority - 1, currentNode.getNext()];
+                	System.out.println("Done");
+                	
+                	if (preCurrentNode == currentNode) {
+                		
+                	}else {
+                		
+                	}
+                }else {
+                	
+                }
+                System.out.println("Availability: " + availability);
+                
+                System.out.printf("%-10d %-40s %-10d %-12d %-15b %-10b%n", currentNode.getOrderID(), order.getDestination(), order.getPriority(), order.getTotalItems(), order.isDelivered());
+                currentNode = currentNode.getNext();
+                k++;
+            }
+        }
+        return false;
     }
 
     // Method to print the orders in a nice format
@@ -108,7 +149,7 @@ public class OrdManLogic {
         for (Map.Entry<Integer, Order> entry : orders.entrySet()) {
             Integer orderId = entry.getKey();
             Order order = entry.getValue();
-            System.out.printf("%-10d %-40s %-10d %-12d %-15b %-10b%n", orderId, order.getDestination(), order.getPriority(), order.getTotalItems(), order.isAllProdAvail(), order.isDelivered());
+            System.out.printf("%-10d %-40s %-10d %-12d %-10b%n", orderId, order.getDestination(), order.getPriority(), order.getTotalItems(), order.isDelivered());
         }
         System.out.println("------------------------------------------------------------------------------------------------------------");
     }
@@ -116,12 +157,13 @@ public class OrdManLogic {
     public void printAllOrdersFromQueue() {
         System.out.println("Orders from Priority Queues:");
         System.out.println("------------------------------------------------------------------------------------------------------------");
-        System.out.printf("Order ID");
+        System.out.printf("%-10s %-40s %-10s %-12s %-15s %-10s%n", "Order ID", "Destination", "Priority", "Total Items", "All Prod Avail", "Delivered");
         System.out.println("------------------------------------------------------------------------------------------------------------");
-        for (int priority = 0; priority <= 5; priority++) {
+        for (int priority = 1; priority <= 5; priority++) {
             Node currentNode = prioQueStart.get(priority);
             while (currentNode != null) {
-                System.out.println(currentNode.getOrderID());
+                Order order = currentNode.getOrder();
+                System.out.printf("%-10d %-40s %-10d %-12d %-10b%n", currentNode.getOrderID(), order.getDestination(), order.getPriority(), order.getTotalItems(), order.isDelivered());
                 currentNode = currentNode.getNext();
             }
         }

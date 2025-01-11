@@ -24,9 +24,13 @@ public class ProdManLogic {
     // Method to add a new product to the inventory
     public boolean addProduct(Integer productID, String productName, int quantity) {
         // Validate input parameters
-	if (productID == null || productName == null || productName.trim().isEmpty() || quantity < 0) {
-            return false;
-        }
+		if (productID == null || productName == null || productName.trim().isEmpty() || quantity < 0) {
+	            return false;
+	        }
+		if(products.containsKey(productID)) {
+			return false;
+		}
+	
         // Create a new product and add it to the inventory
         Product newProduct = new Product(productName, quantity);
         products.put(productID, newProduct);
@@ -44,6 +48,18 @@ public class ProdManLogic {
     }
     
     // Method to check the availability of a product in the inventory
+    public boolean checkAvailability(Map<Integer, Integer> productsInOrderMap) {
+        for (Map.Entry<Integer, Integer> entry : productsInOrderMap.entrySet()) {
+            int productID = entry.getKey();
+            int quantityToCheck = entry.getValue();
+            if (!checkAvailability(productID, quantityToCheck)) {
+                return false; // If any product is not available in the required quantity, return false
+            }
+        }
+        return true; // All products are available in the required quantities
+    }
+    
+    // Method to check the availability of a product in the inventory
     public boolean checkAvailability(int productID, int quantityToCheck) {
     	Product product = products.get(productID);
     	if (product != null && quantityToCheck > 0 && product.getQuantity() >= quantityToCheck) {
@@ -52,21 +68,31 @@ public class ProdManLogic {
     	return false; // Product is not available or not enough quantity
     }
     
+ // Method to check the availability of a product in the inventory
+    public boolean reduceQuantity(Map<Integer, Integer> productsInOrderMap) {
+        for (Map.Entry<Integer, Integer> entry : productsInOrderMap.entrySet()) {
+            int productID = entry.getKey();
+            int quantityToReduce = entry.getValue();
+            if (!reduceQuantity(productID, quantityToReduce)) {
+                return false; 
+            }
+        }
+        return true; // All products are available in the required quantities
+    }
+    
     // Method to reduce the quantity of a product in the inventory
     public boolean reduceQuantity(int productID, int quantityToReduce) {
+    	
     	if (quantityToReduce <= 0) {
     		return false;
     	}
+    	
     	Product product = products.get(productID);
-    	if (product != null) { // If product exists
-    		if (checkAvailability(product, quantityToReduce)) {
-    			product.reduceQuantity(quantityToReduce); 
-    			return true;
-    		}
-    	    return false;
+    	if (product != null && product.getQuantity() >= quantityToReduce ) { // If product exists
+    		product.reduceQuantity(quantityToReduce); 
+			return true;
     	}
     	return false;
-    	
     }
     
     // Overloaded method to check the availability of a product in the inventory
