@@ -52,7 +52,7 @@ public class ProdManLogic {
     	return false;
     }
     
-    // Method to check the availability of a product in the inventory
+    // Method to check the availability of products in the inventory
     public boolean checkAvailability(Map<Integer, Integer> productsInOrderMap) {
         for (Map.Entry<Integer, Integer> entry : productsInOrderMap.entrySet()) {
             int productID = entry.getKey();
@@ -64,7 +64,7 @@ public class ProdManLogic {
         return true; // All products are available in the required quantities
     }
     
-    // Method to check the availability of a product in the inventory
+    // Method to check the availability of a specific product in the inventory
     public boolean checkAvailability(int productID, int quantityToCheck) {
     	Product product = products.get(productID);
     	if (product != null && quantityToCheck > 0 && product.getQuantity() >= quantityToCheck) {
@@ -73,7 +73,7 @@ public class ProdManLogic {
     	return false; // Product is not available or not enough quantity
     }
     
- // Method to check the availability of a product in the inventory
+    // Method to reduce the quantity of products in the inventory
     public boolean reduceQuantity(Map<Integer, Integer> productsInOrderMap) {
         for (Map.Entry<Integer, Integer> entry : productsInOrderMap.entrySet()) {
             int productID = entry.getKey();
@@ -85,7 +85,7 @@ public class ProdManLogic {
         return true; // All products are available in the required quantities
     }
     
-    // Method to reduce the quantity of a product in the inventory
+    // Method to reduce the quantity of a specific product in the inventory
     public boolean reduceQuantity(int productID, int quantityToReduce) {
     	
     	if (quantityToReduce <= 0) {
@@ -107,7 +107,6 @@ public class ProdManLogic {
     	}
     	return false; // Product is not available or not enough quantity
     }
-    
     
     // Method to print the inventory in a nice format
     public void printInventory() {

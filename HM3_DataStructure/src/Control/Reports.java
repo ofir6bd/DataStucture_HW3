@@ -5,6 +5,7 @@ import java.util.Map;
 import Entity.Product;
 import Entity.Order;
 
+// Class representing a node in the AVL tree
 class Node { 
     int key; 
     Node left; 
@@ -12,6 +13,7 @@ class Node {
     int height; 
     ArrayList<Integer> arrayList;
     
+    // Constructor to initialize a node with a key
     Node(int k) { 
         key = k; 
         left = null; 
@@ -20,19 +22,23 @@ class Node {
         arrayList = new ArrayList<>();
     }
     
+    // Method to add a product ID to the node's list
     public void addProductID(int productID) {
         arrayList.add(productID);
     }
 
+    // Getter for the node's list
     public ArrayList<Integer> getarrayList() {
         return arrayList;
     }
     
+    // Getter for the node's key
     public int getKey() {
         return key;
     }
 } 
 
+// Class representing an AVL tree
 class AVLTree {
     
     // A utility function to get the height of the tree 
@@ -136,7 +142,7 @@ class AVLTree {
     // A utility function to print in-order traversal of the tree in ascending order
     static void inOrderAscendingProducts(Node root, Map<Integer, Product> products) { 
         if (root != null) {
-        	inOrderAscendingProducts(root.left, products);
+            inOrderAscendingProducts(root.left, products);
             for (int productId : root.getarrayList()) {
                 Product product = products.get(productId);
                 System.out.println(String.format("%-10d %-20s %-10d", 
@@ -146,7 +152,7 @@ class AVLTree {
         } 
     }
     
- // A utility function to print in-order traversal of the tree in descending order
+    // A utility function to print in-order traversal of the tree in descending order
     static void inOrderDescendingOrders(Node root, Map<Integer, Order> orders) {
         if (root != null) {
             inOrderDescendingOrders(root.right, orders);
@@ -158,20 +164,18 @@ class AVLTree {
             inOrderDescendingOrders(root.left, orders);
         }
     }
-    
 }
-
 
 public class Reports {
 
-    
+    // Method to generate and print the inventory report
     public void getInventoryReport() {
         ProdManLogic prodMan = ProdManLogic.getInstance();
         Map<Integer, Product> products = prodMan.getProducts();
 
         Node root = null;
         for (Map.Entry<Integer, Product> entry : products.entrySet()) {
-            int  productId = entry.getKey();
+            int productId = entry.getKey();
             Product product = entry.getValue();
             root = AVLTree.insert(root, product.getQuantity(), productId);
         }
@@ -188,6 +192,7 @@ public class Reports {
         System.out.println("-------------------------------------------------");
     }
     
+    // Method to generate and print the report of the k biggest orders
     public void getKBiggestOrders() {
         System.out.println("----------K biggest Orders Report----------");
         OrdManLogic ordMan = OrdManLogic.getInstance();
@@ -217,6 +222,7 @@ public class Reports {
         System.out.println("----------------------------------------------------------------");
     }
     
+    // Method to generate and print the total orders report
     public void totalOrdersReport() {
         System.out.println("----------Total Orders Report----------");
         ProdManLogic prodMan = ProdManLogic.getInstance();
@@ -258,5 +264,4 @@ public class Reports {
         }
         System.out.println("--------------------------------------------------------------------------------------------");
     }
-
 }
