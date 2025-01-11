@@ -216,4 +216,47 @@ public class Reports {
 
         System.out.println("----------------------------------------------------------------");
     }
+    
+    public void totalOrdersReport() {
+        System.out.println("----------Total Orders Report----------");
+        ProdManLogic prodMan = ProdManLogic.getInstance();
+        OrdManLogic ordMan = OrdManLogic.getInstance();
+        QueNode[] prioQueStart = ordMan.getPrioQueStart(); 
+        ArrayList<Integer> unAbleToDeliver = new ArrayList<>();
+        ArrayList<Integer> ableToDeliver = new ArrayList<>();
+        Map<Integer, Order> orders = ordMan.getOrders();
+
+        for (int priority = 0; priority < prioQueStart.length; priority++) {
+            QueNode currentNode = prioQueStart[priority];
+            while (currentNode != null) {
+                int orderID = currentNode.getOrderID();
+                Order order = currentNode.getOrder();
+                if (prodMan.checkAvailability(order.getProductsInOrderMap())) {
+                    ableToDeliver.add(orderID);
+                } else {
+                    unAbleToDeliver.add(orderID);
+                }
+                currentNode = currentNode.getNext();
+            }
+        }
+
+        System.out.println();
+        System.out.println("-------Orders Report by Quantity (Desc)-------");
+        // Print the header of the table
+        System.out.println("--------------------------------------------------------------------------------------------");
+        System.out.printf("%-10s %-40s %-15s %-10s %-10s%n", "Order ID", "Destination", "Total Items", "Priority", "Able to Deliver");
+        System.out.println("--------------------------------------------------------------------------------------------");
+        for (int i = 0; i < unAbleToDeliver.size(); i++) {
+            Order order = orders.get(unAbleToDeliver.get(i));
+            System.out.printf("%-10d %-40s %-15d %-10d %-10s%n", 
+                    unAbleToDeliver.get(i), order.getDestination(), order.getTotalItems(), order.getPriority(), "No");
+        }
+        for (int i = 0; i < ableToDeliver.size(); i++) {
+            Order order = orders.get(ableToDeliver.get(i));
+            System.out.printf("%-10d %-40s %-15d %-10d %-10s%n", 
+                    ableToDeliver.get(i), order.getDestination(), order.getTotalItems(), order.getPriority(), "Yes");
+        }
+        System.out.println("--------------------------------------------------------------------------------------------");
+    }
+
 }

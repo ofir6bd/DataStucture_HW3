@@ -51,7 +51,7 @@ public class Main {
 		ordMan.addOrder("Israel, Netanya, Dizengoff St 7", 1, new int[]{2, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
 		ordMan.addOrder("Israel, Ashdod, Begin St 8", 2, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 1}); 
 		ordMan.addOrder("Israel, Holon, Jabotinsky St 9", 3, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 2, 14});
-		ordMan.addOrder("Israel, Bat-Yam, Jabotinsky St 12", 2, new int[]{1, 2, 2, 4, 3, 6, 4, 8, 5, 10, 6, 12, 7, 2});
+		ordMan.addOrder("Israel, Bat-Yam, Jabotinsky St 10", 1, new int[]{1, 2, 2, 4, 3, 6, 4, 8, 5, 10, 6, 12, 7, 2});
 		ordMan.printOrders();
 		
 		
@@ -75,6 +75,7 @@ public class Main {
 		prodMan.printInventory();
 		repMan.getInventoryReport();
 		repMan.getKBiggestOrders();
+		repMan.totalOrdersReport();
 		
 		
 	}
