@@ -47,7 +47,7 @@ public class OrdManLogic {
     private QueNode[] prioQueStart;
     private QueNode[] prioQueEnd;
     private int orderID = 1;
-
+    
     // Private constructor to prevent instantiation
     private OrdManLogic() {
         this.orders = new HashMap<>();
@@ -61,6 +61,7 @@ public class OrdManLogic {
             _instance = new OrdManLogic();
         return _instance;
     }
+
 
     public boolean addOrder(String destination, int priority, int[] productsInOrder) {
         // Validate parameters in a single if statement
@@ -99,6 +100,10 @@ public class OrdManLogic {
         return true; // Order added successfully
     }
 
+    public boolean processNextOrder() {
+    	return processNextOrder(1);
+    }
+    
     public boolean processNextOrder(int kOrders) {
         int k = 0;
         ProdManLogic prodMan = ProdManLogic.getInstance();
@@ -123,7 +128,6 @@ public class OrdManLogic {
                     	preCurrentNode = prioQueStart[priority - 1];
                     	currentNode = prioQueStart[priority - 1];
                     }else {
-                    	System.out.println(currentNode.getNext());
                     	preCurrentNode.setNext(currentNode.getNext());
                     	currentNode =  currentNode.getNext();	
                     	if (currentNode == null) {

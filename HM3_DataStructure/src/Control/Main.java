@@ -56,16 +56,25 @@ public class Main {
 		
 		
 		//insert 5 more products
-		prodMan.addProduct(11, "Wardrobe", 50);
-		prodMan.addProduct(12, "Stool", 15);
+		prodMan.addProduct(11, "Wardrobe", 30);
+		prodMan.addProduct(12, "Stool", 30);
 		prodMan.addProduct(13, "Mirror", 30);
-		prodMan.addProduct(14, "TV Stand", 45);
-		prodMan.addProduct(15, "Ottoman", 25);
+		prodMan.addProduct(14, "TV Stand", 1);
+		prodMan.addProduct(15, "Ottoman", 1);
 		prodMan.printInventory();
 		ordMan.printAllOrdersFromQueue();
-		ordMan.processNextOrder(8);
+		ordMan.processNextOrder(3);
 		ordMan.printAllOrdersFromQueue();
 		
+		//////Reports//////
+		System.out.println("");
+		System.out.println("*******Reports*******");
+		Reports repMan = new Reports();
+		
+		repMan.getKBiggestOrders();
+		prodMan.printInventory();
+		
+		repMan.getInventoryReport();
 		
 	}
 

@@ -21,6 +21,11 @@ public class ProdManLogic {
         return _instance;
     }
     
+    // Method to get the products map
+    public Map<Integer, Product> getProducts() {
+        return products;
+    }
+    
     // Method to add a new product to the inventory
     public boolean addProduct(Integer productID, String productName, int quantity) {
         // Validate input parameters
