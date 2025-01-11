@@ -1,6 +1,8 @@
 package Control;
 
 import Entity.Order;
+import Entity.Product;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,8 +63,16 @@ public class OrdManLogic {
             _instance = new OrdManLogic();
         return _instance;
     }
+    
+    public QueNode[] getPrioQueStart() {
+        return prioQueStart;
+    }
 
-
+ // Method to get the orders map
+    public Map<Integer, Order> getOrders() {
+        return orders;
+    }
+    
     public boolean addOrder(String destination, int priority, int[] productsInOrder) {
         // Validate parameters in a single if statement
         if (destination == null || destination.trim().isEmpty() || priority < 1 || priority > 5 || productsInOrder.length % 2 != 0) {

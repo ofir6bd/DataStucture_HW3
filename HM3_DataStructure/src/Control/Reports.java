@@ -3,28 +3,29 @@ package Control;
 import java.util.ArrayList;
 import java.util.Map;
 import Entity.Product;
+import Entity.Order;
 
 class Node { 
     int key; 
     Node left; 
     Node right; 
     int height; 
-    ArrayList<Integer> productsIDs;
+    ArrayList<Integer> arrayList;
     
     Node(int k) { 
         key = k; 
         left = null; 
         right = null; 
         height = 1; 
-        productsIDs = new ArrayList<>();
+        arrayList = new ArrayList<>();
     }
     
     public void addProductID(int productID) {
-        productsIDs.add(productID);
+        arrayList.add(productID);
     }
 
-    public ArrayList<Integer> getProductsIDs() {
-        return productsIDs;
+    public ArrayList<Integer> getarrayList() {
+        return arrayList;
     }
     
     public int getKey() {
@@ -132,47 +133,87 @@ class AVLTree {
         return node; 
     }
 
-    // A utility function to print in-order traversal of the tree in descending order
-    static void inOrderDescending(Node root, Map<Integer, Product> products) { 
+    // A utility function to print in-order traversal of the tree in ascending order
+    static void inOrderAscendingProducts(Node root, Map<Integer, Product> products) { 
         if (root != null) {
-            inOrderDescending(root.right, products);
-            for (int productId : root.getProductsIDs()) {
+        	inOrderAscendingProducts(root.left, products);
+            for (int productId : root.getarrayList()) {
                 Product product = products.get(productId);
                 System.out.println(String.format("%-10d %-20s %-10d", 
                     productId, product.getProductName(), product.getQuantity()));
             }
-            inOrderDescending(root.left, products);  
+            inOrderAscendingProducts(root.right, products);  
         } 
     }
+    
+ // A utility function to print in-order traversal of the tree in descending order
+    static void inOrderDescendingOrders(Node root, Map<Integer, Order> orders) {
+        if (root != null) {
+            inOrderDescendingOrders(root.right, orders);
+            for (int orderId : root.getarrayList()) {
+                Order order = orders.get(orderId);
+                System.out.printf("%-10d %-40s %-15d%n", 
+                    orderId, order.getDestination(), order.getTotalItems());
+            }
+            inOrderDescendingOrders(root.left, orders);
+        }
+    }
+    
 }
 
 
 public class Reports {
 
-    public void getKBiggestOrders() {
-        System.out.println("----------K biggest Orders Report----------");
-    }
-
+    
     public void getInventoryReport() {
         ProdManLogic prodMan = ProdManLogic.getInstance();
         Map<Integer, Product> products = prodMan.getProducts();
 
-        System.out.println("----------Inventory Report----------");
         Node root = null;
         for (Map.Entry<Integer, Product> entry : products.entrySet()) {
             int  productId = entry.getKey();
             Product product = entry.getValue();
             root = AVLTree.insert(root, product.getQuantity(), productId);
         }
-        
+        System.out.println();
+        System.out.println("-------Inventory Report by Quantity (Asc)-------");
         // Print the header of the table
         System.out.println("-------------------------------------------------");
         System.out.println("Product ID  Product Name         Quantity  ");
         System.out.println("-------------------------------------------------");
         
-        // Print the AVL tree in in-order traversal in descending order
-        AVLTree.inOrderDescending(root, products);
+        // Print the AVL tree in in-order traversal in ascending order
+        AVLTree.inOrderAscendingProducts(root, products);
         
         System.out.println("-------------------------------------------------");
+    }
+    
+    public void getKBiggestOrders() {
+        System.out.println("----------K biggest Orders Report----------");
+        OrdManLogic ordMan = OrdManLogic.getInstance();
+        QueNode[] prioQueStart = ordMan.getPrioQueStart(); // Get the priority queues
+
+        Node root = null;
+        for (int priority = 0; priority < prioQueStart.length; priority++) {
+            QueNode currentNode = prioQueStart[priority];
+            while (currentNode != null) {
+                int orderID = currentNode.getOrderID();
+                Order order = currentNode.getOrder();
+                root = AVLTree.insert(root, order.getTotalItems(), orderID);
+                currentNode = currentNode.getNext();
+            }
+        }
+
+        System.out.println();
+        System.out.println("-------Orders Report by Quantity (Desc)-------");
+        // Print the header of the table
+        System.out.println("----------------------------------------------------------------");
+        System.out.printf("%-10s %-40s %-15s%n", "Order ID", "Destination", "Total Items");
+        System.out.println("----------------------------------------------------------------");
+
+        // Print the AVL tree in in-order traversal in descending order
+        AVLTree.inOrderDescendingOrders(root, ordMan.getOrders());
+
+        System.out.println("----------------------------------------------------------------");
     }
 }

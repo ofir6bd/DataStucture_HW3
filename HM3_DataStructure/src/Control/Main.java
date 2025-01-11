@@ -71,10 +71,11 @@ public class Main {
 		System.out.println("*******Reports*******");
 		Reports repMan = new Reports();
 		
-		repMan.getKBiggestOrders();
-		prodMan.printInventory();
 		
+		prodMan.printInventory();
 		repMan.getInventoryReport();
+		repMan.getKBiggestOrders();
+		
 		
 	}
 
