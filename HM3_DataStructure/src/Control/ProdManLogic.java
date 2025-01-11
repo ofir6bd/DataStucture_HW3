@@ -79,7 +79,7 @@ public class ProdManLogic {
             int productID = entry.getKey();
             int quantityToReduce = entry.getValue();
             if (!reduceQuantity(productID, quantityToReduce)) {
-                return false; 
+                return false; // If one of the products not available return false on all map 
             }
         }
         return true; // All products are available in the required quantities
@@ -98,4 +98,31 @@ public class ProdManLogic {
     	}
     	return false;
     }
+    
+    // Method to increase the quantity of products in the inventory
+    public boolean increaseQuantity(Map<Integer, Integer> productsInMap) {
+        for (Map.Entry<Integer, Integer> entry : productsInMap.entrySet()) {
+            int productID = entry.getKey();
+            int quantityToIncrease = entry.getValue();
+            if (!increaseQuantity(productID, quantityToIncrease)) {
+                return false; 
+            }
+        }
+        return true; 
+    }
+    
+    // Method to increase the quantity of a specific product in the inventory
+    private boolean increaseQuantity(int productID, int quantityToIncrease) {
+    	if (quantityToIncrease <= 0) {
+    		return false;
+    	}
+    	
+    	Product product = products.get(productID);
+    	if (product != null ) { // If product exists
+    		product.increaseQuantity(quantityToIncrease); 
+			return true;
+    	}
+    	return false;
+    }
+    
 }

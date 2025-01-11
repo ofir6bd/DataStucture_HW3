@@ -70,16 +70,15 @@ public class Main {
         
         
         
-        System.out.println("\n\n\n\n----------------------------------------------------------------------------------------------");
+        System.out.println("\n\n\n\n\n\n\n\n----------------------------------------------------------------------------------------------");
         System.out.println("---------------------------------Testing Actions on products----------------------------------");
         System.out.println("----------------------------------------------------------------------------------------------");
         // Check availability of products
         Map<Integer, Integer> productsToCheck = new HashMap<>();
-        productsToCheck.put(1, 64);
+        productsToCheck.put(1, 1);
         System.out.println("Check Availability: " + prodMan.checkAvailability(productsToCheck));
         
         // Reduce quantity of a product
-        productsToCheck.put(1, 64);
         System.out.println("Reduce Quantity: " + prodMan.reduceQuantity(productsToCheck));
         
         productsToCheck.remove(1);
@@ -88,7 +87,10 @@ public class Main {
         
         // Check if product deleted from the inventory
         System.out.println("Deleted Product exist: " + productsToCheck.containsKey(1));
-
+        
+        productsToCheck.put(15, 1000);
+        System.out.println("Increase Quantity: " + prodMan.increaseQuantity(productsToCheck));
+        
         System.out.println("\n----------------------------------------------------------------------------------------------");
         System.out.println("------------------Testing edge cases on products - all should return 'false'------------------");
         System.out.println("----------------------------------------------------------------------------------------------");
@@ -110,6 +112,5 @@ public class Main {
         System.out.println("Add Order (No Address): " + ordMan.addOrder("", 1, new int[]{1, 2, 3, 4, 5, 6, 7, 8}));
         System.out.println("Add Order (Priority not between 1-5): " + ordMan.addOrder("", 1, new int[]{1, 2, 3, 4, 5, 6, 7, 8}));
         System.out.println("Add Order (Odd numbers- meanining no quantity for last product): " + ordMan.addOrder("Israel, Jerusalem, Ramot 4", 1, new int[]{1, 7, 3}));
-        
     }
 }

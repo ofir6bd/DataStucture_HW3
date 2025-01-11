@@ -257,6 +257,7 @@ public class Reports {
             System.out.printf("%-10d %-40s %-15d %-10d %-10s%n", 
                     unAbleToDeliver.get(i), order.getDestination(), order.getTotalItems(), order.getPriority(), "No");
         }
+        System.out.println("        --------------------------------------------------------------------              ");
         for (int i = 0; i < ableToDeliver.size(); i++) {
             Order order = orders.get(ableToDeliver.get(i));
             System.out.printf("%-10d %-40s %-15d %-10d %-10s%n", 

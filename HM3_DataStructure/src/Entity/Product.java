@@ -31,6 +31,12 @@ public class Product {
     public void reduceQuantity(int quantityToReduce) {
         this.quantity = this.quantity - quantityToReduce;
     }
+    
+    // Setter method to reduce the quantity by a specified amount
+    public void increaseQuantity(int quantityToReduce) {
+        this.quantity = this.quantity + quantityToReduce;
+    }
+    
 
 //    // Overriding the toString method to provide a string representation of the Product object
 //    @Override
