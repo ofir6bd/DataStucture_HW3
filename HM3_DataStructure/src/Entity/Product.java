@@ -2,7 +2,7 @@ package Entity;
 
 public class Product {
 
-    // productID is not part of the instance; it will be the key in the hashmap
+    // productID is not part of the instance; it will be the key in the Hashmap
     private String product_name;
     private int quantity;
 
@@ -36,14 +36,4 @@ public class Product {
     public void increaseQuantity(int quantityToReduce) {
         this.quantity = this.quantity + quantityToReduce;
     }
-    
-
-//    // Overriding the toString method to provide a string representation of the Product object
-//    @Override
-//    public String toString() {
-//        return "Product{" +
-//                "productName='" + product_name + '\'' +
-//                ", quantity=" + quantity +
-//                '}';
-//    }
 }
