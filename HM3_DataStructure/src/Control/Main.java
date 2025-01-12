@@ -58,21 +58,25 @@ public class Main {
         // Get the instance of Reports
         Reports repMan = new Reports();
         
-	    // Generate and print the total orders report
-	    repMan.totalOrdersReport();
-	    
+        // Generate and print the total orders report
+        repMan.totalOrdersReport();
+        
+        // Generate and print the unable to deliver orders report
+        repMan.unableToDeliverOrdersReport();
+        
+        // Generate and print the top prioritized orders report
+        repMan.topPrioOrdersReport();
+        
         // Generate and print the inventory report
         repMan.getInventoryReport();
         
         // Generate and print the report of the k biggest orders
         repMan.getKBiggestOrders(3);
         
-        
-        
-        
         System.out.println("\n\n\n\n\n\n\n\n----------------------------------------------------------------------------------------------");
         System.out.println("---------------------------------Testing Actions on products----------------------------------");
         System.out.println("----------------------------------------------------------------------------------------------");
+        
         // Check availability of products
         Map<Integer, Integer> productsToCheck = new HashMap<>();
         productsToCheck.put(1, 1);
@@ -81,19 +85,24 @@ public class Main {
         // Reduce quantity of a product
         System.out.println("Reduce Quantity: " + prodMan.reduceQuantity(productsToCheck));
         
+        // Remove product from the map
         productsToCheck.remove(1);
+        
         // Delete a product from the inventory
         System.out.println("Delete Product: " + prodMan.deleteProduct(10));
         
         // Check if product deleted from the inventory
         System.out.println("Deleted Product exist: " + productsToCheck.containsKey(1));
         
+        // Increase quantity of a product
         productsToCheck.put(15, 1000);
         System.out.println("Increase Quantity: " + prodMan.increaseQuantity(productsToCheck));
         
         System.out.println("\n----------------------------------------------------------------------------------------------");
         System.out.println("------------------Testing edge cases on products - all should return 'false'------------------");
         System.out.println("----------------------------------------------------------------------------------------------");
+        
+        // Test edge cases for products
         System.out.println("add Product(productID already exist): " + prodMan.addProduct(9, "Ball", 8));
         System.out.println("add Product(No product name): " + prodMan.addProduct(11, "", 7));  
         System.out.println("add Product(Negative quantity): " + prodMan.addProduct(12, "Ball", -1));   
@@ -109,8 +118,10 @@ public class Main {
         System.out.println("\n----------------------------------------------------------------------------------------------");
         System.out.println("------------------Testing edge cases on orders - all should return 'false'------------------");
         System.out.println("----------------------------------------------------------------------------------------------");
+        
+        // Test edge cases for orders
         System.out.println("Add Order (No Address): " + ordMan.addOrder("", 1, new int[]{1, 2, 3, 4, 5, 6, 7, 8}));
         System.out.println("Add Order (Priority not between 1-5): " + ordMan.addOrder("", 1, new int[]{1, 2, 3, 4, 5, 6, 7, 8}));
-        System.out.println("Add Order (Odd numbers- meanining no quantity for last product): " + ordMan.addOrder("Israel, Jerusalem, Ramot 4", 1, new int[]{1, 7, 3}));
+        System.out.println("Add Order (Odd numbers- meaning no quantity for last product): " + ordMan.addOrder("Israel, Jerusalem, Ramot 4", 1, new int[]{1, 7, 3}));
     }
 }

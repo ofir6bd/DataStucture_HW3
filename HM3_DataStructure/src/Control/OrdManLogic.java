@@ -146,19 +146,19 @@ public class OrdManLogic {
                     prodMan.reduceQuantity(order.getProductsInOrderMap());
                     order.setDelivered(true);
                     
-                    if (preCurrentNode == currentNode) {
+                    if (preCurrentNode == currentNode) { // If it's on the first node of the linked list
                         prioQueStart[priority - 1] = currentNode.getNext();
                         preCurrentNode = prioQueStart[priority - 1];
                         currentNode = prioQueStart[priority - 1];
-                    } else {
+                    } else {         // Not on the first Node in the specific priority
                         preCurrentNode.setNext(currentNode.getNext());
                         currentNode = currentNode.getNext();    
-                        if (currentNode == null) {
+                        if (currentNode == null) { // reached to the end of the linked list
                             prioQueEnd[priority - 1] = preCurrentNode.getNext();    
                         }
                     }
                 } else { // Not all the products available - not delivered
-                	System.out.println("OrderID: " + currentNode.getOrderID() + " - Processed not all products available- still in Queue");
+                	System.out.println("OrderID: " + currentNode.getOrderID() + " - Processed not all products available - still in Queue");
                     preCurrentNode = currentNode;
                     currentNode = currentNode.getNext();
                 }
